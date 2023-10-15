@@ -195,3 +195,5 @@ autoload/netrwHistory
 # Ignore Vim's undofiles directory
 .undodir/
 
+
+run.test

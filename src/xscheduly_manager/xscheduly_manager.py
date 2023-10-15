@@ -12,32 +12,29 @@ Usage:
 import time
 import os
 
+def animation_point(n):
+    for _ in range(n):
+        print(".", end="", flush=True)
+        time.sleep(0.025)
+
 def is_csv_file(self, file_path):
     return os.path.isfile(file_path) and file_path.endswith('.csv')
 
-def check_file_content(self, file_path, colum_numbers):
-    if True:
+def get_file_content(self, file_path, colum_numbers):
+    if is_csv_file(self, file_path):
+        animation_point(5)
+        print(" File exist [OK]")
         return True
-
     else:
         return False
 
-def validate_csv_file(self, file_path):
-    return True
-
-
 class XschedulyManager:
 
-    def verify_file_format(self, file_path):
-        print("[Checking file format]", end="")
-        for _ in range(10):
-            print(".", end="", flush=True)
-            time.sleep(0.025)
+    def verify_file_format(self, file_path, colum_numbers):
+        print("[Checking file]", end="")
+        animation_point(5)
 
-        if validate_csv_file(self, file_path):
-            print("[OK]")
-        else:
-            raise Exception("Format error")
+        return  get_file_content(self, file_path, colum_numbers)
 
 
 
