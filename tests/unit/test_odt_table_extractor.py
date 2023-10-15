@@ -11,12 +11,12 @@ sys.path.append(os.path.abspath('../../src'))
 
 from src.xscheduly_manager.odt_table_extractor import OdtTableExtractor
 
-class OdtTableExtractor:
+class TestOdtTableExtractor:
     def setUp(self):
         self.extractor = OdtTableExtractor()
 
     def test_file_format_correct(self):
-        assertTrue(False)
+        self.assertTrue(False)
 
-
-
+if __name__ == '__main__':
+    unittest.main()

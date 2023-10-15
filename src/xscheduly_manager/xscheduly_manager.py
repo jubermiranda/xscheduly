@@ -23,50 +23,40 @@ def animation_point(n):
 def print_animations(messages):
     if isinstance(messages, list):
         for m in messages:
-            print(m, end="|")
-            animation_point(5)
+            print(m)
+            animation_point(4)
 
     else:
         print(messages)
 
-def is_csv_file(self, file_path):
-    if os.path.isfile(file_path) and file_path.endswith('.csv'):
-        return
-    else:
-        raise Exception(" file name error ")
+def is_odt_file(self, file_path):
+    return os.path.isfile(file_path) and file_path.endswith('.odt')
+
 
 def get_file_content(self, file_path, colum_numbers):
-    result = []
-    message = []
+    tables = []
 
     try:
-        message.append(["[Checking file]"])
-        is_csv_file(self, file_path)
-        message.append(f"[File exist]\n")
-
-        try:
-                message.append("[Checking file content]")
-                result = odt_table_extractor.get_tables(file_path)
-
-                message.append(f"[{result.size()} table(s) found]\n")
-
-        except Exception as e:
-                message.append(f"[File Content Format Error]\n")
+        tables = odt_table_extractor.get_tables(file_path, colum_numbers)
 
     except Exception as e:
-        message.append(f"\n[File not exist, or not a odt file]")
+        print(e)
 
-    print_animations(message)
-
-    return result
-
+    return tables
 
 class XschedulyManager:
 
     def verify_file_format(self, file_path, colum_numbers):
-        # comment line below to remove animation
+        message = []
+        message.append(["[Checking file]"])
 
-        return  get_file_content(self, file_path, colum_numbers)
+        if is_odt_file(self, file_path):
+            message.append(f"[File exist]")
+        else:
+            message.append(f"[File not exist, or not a odt file]")
+            return False
 
 
+        print_animations(message)
+        return True
 
