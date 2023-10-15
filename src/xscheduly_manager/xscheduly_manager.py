@@ -12,17 +12,22 @@ Usage:
 import time
 import os
 
-from xscheduly_manager import odt_table_extractor
+from . import odt_table_extractor
+
+STD_DELAY_ANIMATION = 0.21
 
 def animation_point(n):
     for _ in range(n):
-        print(".", end="", flush=True)
-        time.sleep(0.025)
+        time.sleep(STD_DELAY_ANIMATION)
 
-def print_animations(messages, ms_delay):
-    for m in messages:
-        print(m)
-        animation_point(ms_delay)
+def print_animations(messages):
+    if isinstance(messages, list):
+        for m in messages:
+            print(m, end="|")
+            animation_point(5)
+
+    else:
+        print(messages)
 
 def is_csv_file(self, file_path):
     if os.path.isfile(file_path) and file_path.endswith('.csv'):
@@ -35,23 +40,23 @@ def get_file_content(self, file_path, colum_numbers):
     message = []
 
     try:
+        message.append(["[Checking file]"])
         is_csv_file(self, file_path)
-        message.append("[File exist]")
+        message.append(f"[File exist]\n")
 
         try:
+                message.append("[Checking file content]")
                 result = odt_table_extractor.get_tables(file_path)
-                #all current check ok here after .get_tables
-                #
-                message.append(f"[{result.size()} table(s) found]")
+
+                message.append(f"[{result.size()} table(s) found]\n")
 
         except Exception as e:
-                message.append("[File Content Format Error]")
+                message.append(f"[File Content Format Error]\n")
 
     except Exception as e:
-        message.append("[File not exist, or not a odt file]")
+        message.append(f"\n[File not exist, or not a odt file]")
 
-    #coment line below to not print animations:
-    print_animations(messages)
+    print_animations(message)
 
     return result
 
@@ -60,7 +65,6 @@ class XschedulyManager:
 
     def verify_file_format(self, file_path, colum_numbers):
         # comment line below to remove animation
-        print_animations("[Checking file]", 3)
 
         return  get_file_content(self, file_path, colum_numbers)
 

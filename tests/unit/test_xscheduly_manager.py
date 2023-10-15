@@ -9,10 +9,7 @@ import unittest
 import os
 import sys
 
-# Make sure the path to the src directory is correctly added
 sys.path.append(os.path.abspath('../../src'))
-
-# Import the XschedulyManager from the correct module
 from src.xscheduly_manager.xscheduly_manager import XschedulyManager
 
 

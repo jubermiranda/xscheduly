@@ -1,0 +1,7 @@
+"""
+Module to read odt file, search for tables
+provide mothods to create csv tables from
+tables found inside odt fiel
+"""
+
+class OdtTable
