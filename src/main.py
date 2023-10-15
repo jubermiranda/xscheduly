@@ -2,6 +2,7 @@
 # modules
 from subject.subject import Subject
 from teacher.teacher import Teacher
+
 from xscheduly_manager.xscheduly_manager import XschedulyManager
 
 MANAGER = None
