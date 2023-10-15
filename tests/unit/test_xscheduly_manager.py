@@ -12,9 +12,7 @@ import sys
 sys.path.append(os.path.abspath('../../src'))
 from src.xscheduly_manager.xscheduly_manager import XschedulyManager
 
-
 TEST_FILE_PATH = "templates/table_test.odt"
-STD_COLUM_NUMBER = 2
 
 class TestXschedulyManager(unittest.TestCase):
     def setUp(self):
@@ -24,7 +22,7 @@ class TestXschedulyManager(unittest.TestCase):
         self.assertTrue(os.path.exists(TEST_FILE_PATH))
 
     def test_file_should_be_in_odt_format(self):
-        self.assertTrue(self.manager.verify_file_format(TEST_FILE_PATH, STD_COLUM_NUMBER))
+        self.assertTrue(self.manager.verify_file_format(TEST_FILE_PATH))
 
 if __name__ == '__main__':
     unittest.main()

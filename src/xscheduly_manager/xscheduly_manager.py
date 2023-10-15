@@ -46,7 +46,7 @@ def get_file_content(self, file_path, colum_numbers):
 
 class XschedulyManager:
 
-    def verify_file_format(self, file_path, colum_numbers):
+    def verify_file_format(self, file_path):
         message = []
         message.append(["[Checking file]"])
 
