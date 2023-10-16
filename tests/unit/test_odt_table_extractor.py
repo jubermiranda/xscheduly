@@ -16,10 +16,12 @@ from src.xscheduly_manager.odt_table_extractor import OdtTableExtractor
 
 class TestOdtTableExtractor(unittest.TestCase):
     def setUp(self):
-        self.extractor = OdtTableExtractor()
+        self.extractor = OdtTableExtractor(TEST_FILE_PATH)
 
-    def test_get_tables_from_odt_file(self):
-        self.assertTrue(len( self.extractor.get_tables_from_odt_file(TEST_FILE_PATH) ) > 0)
+    def test_get_tables_from_odt_file_template_should_return_2_tables(self):
+        tables =  self.extractor.get_tables_from_odt_file() 
+        print(f"\nTables: {tables}")
+        self.assertTrue(len(tables) == 2)
 
 if __name__ == '__main__':
     unittest.main()

@@ -14,9 +14,9 @@ import os
 
 from . import odt_table_extractor
 
-STD_DELAY_ANIMATION = 0.21
+STD_DELAY_ANIMATION = 0.01
 
-def animation_point(n):
+def animation_delay(n):
     for _ in range(n):
         time.sleep(STD_DELAY_ANIMATION)
 
@@ -24,7 +24,7 @@ def print_animations(messages):
     if isinstance(messages, list):
         for m in messages:
             print(m)
-            animation_point(4)
+            animation_delay(4)
 
     else:
         print(messages)
@@ -48,14 +48,13 @@ class XschedulyManager:
 
     def verify_file_format(self, file_path):
         message = []
-        message.append(["[Checking file]"])
+        message.append(f"[Checking file]")
 
         if is_odt_file(self, file_path):
             message.append(f"[File exist]")
         else:
             message.append(f"[File not exist, or not a odt file]")
             return False
-
 
         print_animations(message)
         return True

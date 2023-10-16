@@ -8,23 +8,42 @@ import sys
 import zipfile
 import xml.etree.ElementTree as ElTree
 
-def get_odt_content(self):
+def extract_content_from_odt(file_path):
+    content = []
     try:
-        with zipfile.ZipFile(self.file_path, 'r') as odt_file:
-            
-            namespaces = {
-                'text': 'urn:oasis:names:tc:opendocument:xmlns:text:1.0',
-                'table': 'urn:oasis:names:tc:opendocument:xmlns:table:1.0',
-            }
-            x_path_table = './/table:table'
-
-            tables = ElTree.fromstring(odt_file.read('content.xml')).findall(x_path_table, namespaces)
-            return tables
-
+        with zipfile.ZipFile(file_path, 'r') as odt_file:
+            content = ElTree.fromstring(odt_file.read('content.xml'))
     except Exception as e:
-        return []
+        print("ODT FILE READ ERROR")
 
+    return content
 
+def find_tables_from_content(content):
+    namespaces = {
+        'text': 'urn:oasis:names:tc:opendocument:xmlns:text:1.0',
+        'table': 'urn:oasis:names:tc:opendocument:xmlns:table:1.0',
+    }
+    x_path_table = './/table:table'
+
+    tables = content.findall(x_path_table, namespaces)
+    return tables
+
+def process_table_to_objects(table):
+    # Aqui você pode processar e formatar a tabela como desejado, como extrair informações específicas
+    # de linhas e células e criar uma representação das turmas da faculdade.
+    # Por exemplo, você pode criar instâncias de classes para representar o conteúdo da tabela.
+
+    # O exemplo a seguir apenas retorna o elemento XML da tabela formatado.
+    return ElTree.tostring(table, encoding='unicode')
+
+def process_tables(tables):
+    data_from_tables = []
+
+    for table in tables:
+        formatted_table = process_table_to_objects(table)
+        data_from_tables.append(formatted_table)
+
+    return data_from_tables
 
 class OdtTableExtractor:
     def __init__(self, file_path):
@@ -33,13 +52,10 @@ class OdtTableExtractor:
 
     def get_tables_from_odt_file(self):
         try:
-            self.tables = extract_content_from_odt
-            # TODO:
-            # separe as responsabilidades do metodo em 2. um extrai element_tree outro procura no element_tree por tables
-                            
+            xml_content = extract_content_from_odt(self.file_path)
+            self.tables = find_tables_from_content(xml_content)
         except Exception as e:
             print("Error reading odt file")
 
-        return tables
-
+        return self.tables
 
