@@ -18,8 +18,8 @@ class TestOdtTableExtractor(unittest.TestCase):
     def setUp(self):
         self.extractor = OdtTableExtractor()
 
-    def test_file_has_table(self):
-        self.assertTrue(self.extractor.check_content_format())
+    def test_get_tables_from_odt_file(self):
+        self.assertTrue(len( self.extractor.get_tables_from_odt_file(TEST_FILE_PATH) ) > 0)
 
 if __name__ == '__main__':
     unittest.main()
