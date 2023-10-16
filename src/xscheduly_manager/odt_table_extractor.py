@@ -28,20 +28,17 @@ def find_tables_from_content(content):
     tables = content.findall(x_path_table, namespaces)
     return tables
 
-def process_table_to_objects(table):
-    # Aqui você pode processar e formatar a tabela como desejado, como extrair informações específicas
-    # de linhas e células e criar uma representação das turmas da faculdade.
-    # Por exemplo, você pode criar instâncias de classes para representar o conteúdo da tabela.
-
-    # O exemplo a seguir apenas retorna o elemento XML da tabela formatado.
-    return ElTree.tostring(table, encoding='unicode')
-
 def process_tables(tables):
-    data_from_tables = []
+    data_from_tables = {
+        "teachers": [],
+        "subjects": []
+    }
 
     for table in tables:
-        formatted_table = process_table_to_objects(table)
-        data_from_tables.append(formatted_table)
+        # TODO: Determine se a tabela pertence a professores ou matérias
+        # e adicione os dados à lista apropriada em data_from_tables.
+        # Exemplo: verificar o conteúdo da tabela para decidir.
+        pass
 
     return data_from_tables
 
@@ -50,10 +47,9 @@ class OdtTableExtractor:
         self.tables = []
         self.file_path = file_path
 
-    def get_tables_from_odt_file(self):
+    def get_tables(self):
         try:
-            xml_content = extract_content_from_odt(self.file_path)
-            self.tables = find_tables_from_content(xml_content)
+            self.tables = process_tables(find_tables_from_content(extract_content_from_odt(self.file_path)))
         except Exception as e:
             print("Error reading odt file")
 
